@@ -1,9 +1,7 @@
 apply plugin: 'groovy'
 apply plugin: 'maven'
-
-version = '1.0.0'
-group = 'com.buxiaohui'
-archivesBaseName = 'FCWatcher'
+apply plugin:  "com.gradle.plugin-publish"
+apply plugin:  "java-gradle-plugin"
 
 dependencies {
     // gradle sdk
@@ -20,10 +18,42 @@ repositories {
     google()
 }
 
+
 uploadArchives {
     repositories {
         mavenDeployer {
-            repository(url: "file:../lib")
+            repository(url: uri("../lib"))
+            pom.groupId = 'com.buxiaohui'
+            pom.artifactId = 'fc.watcher'
+            pom.version = '1.0.0'
+        }
+    }
+}
+// Use java-gradle-plugin to generate plugin descriptors and specify plugin ids
+gradlePlugin {
+    plugins {
+        greetingsPlugin {
+            id = 'fc.watcher'
+            implementationClass = 'com.buxiaohui.fastclick.FCPlugin'
+        }
+    }
+}
+
+// The configuration example below shows the minimum required properties
+// configured to publish your plugin to the plugin portal
+pluginBundle {
+    website = 'https://github.com/Buxiaohui/FastClick'
+    vcsUrl = 'https://github.com/Buxiaohui/FastClick.git'
+    description = 'Fast click!'
+    tags = ['android', 'fast click']
+    version = '1.0.1'
+    group = "com.buxiaohui"
+
+    plugins {
+        greetingsPlugin {
+            // id is captured from java-gradle-plugin configuration
+            id = 'fc.watcher'
+            displayName = 'Fast click plugin'
         }
     }
 }

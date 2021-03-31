@@ -40,13 +40,16 @@ class FCPlugin implements Plugin<Project> {
                 variants.each {
                     println("[variants] $it")
                 }
-//                variants.all { variant ->
-//                    println("[variant.name is] $variant.name")
-//                    def task = project.tasks.create("create${variant.name.capitalize()}GeneratorTask",
-//                            GeneratorTask.class)
-//                    // 注册生成java类的task，指定生成地址，需要和task中写入java的地址一致
-//                    variant.registerJavaGeneratingTask(task,new File(project.buildDir, "generated/source/container"))
-//                }
+                variants.all { variant ->
+                    println("[variant.name is] $variant.name")
+                    def generatorToolClassTask = project.tasks.create("create${variant.name.capitalize()}GeneratorToolClassTask", GeneratorToolClassTask.class)
+                    // 注册生成java类的task，指定生成地址，需要和task中写入java的地址一致
+                    variant.registerJavaGeneratingTask(generatorToolClassTask,new File(project.buildDir, "generated/source/container"))
+
+                    def generatorAnnotationTask = project.tasks.create("create${variant.name.capitalize()}GeneratorAnnotationTask", GeneratorAnnotationTask.class)
+                    // 注册生成java类的task，指定生成地址，需要和task中写入java的地址一致
+                    variant.registerJavaGeneratingTask(generatorAnnotationTask,new File(project.buildDir, "generated/source/container"))
+                }
             }
             AppExtension appExtension = project.extensions.getByType(AppExtension.class)
             FCTransform fcTransform = new FCTransform(project)
