@@ -1,0 +1,5 @@
+rootProject.name = "FastClick"
+include ':app'
+include ':fc-compiler'
+include ':fc-annotation'
+include ':fc-lib'
