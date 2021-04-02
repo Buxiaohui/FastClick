@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2020 Baidu, Inc. All Rights Reserved.
  */
-package com.buxiaohui.fastclick
+package com.bxh.fastclick
 
 import com.google.common.io.ByteStreams
 import com.google.common.io.Files

@@ -18,7 +18,7 @@ buildscript {
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
-        classpath 'com.buxiaohui:fc.watcher:1.0.0'
+//        classpath 'com.bxh:fastclick:1.0.0'
         classpath "com.gradle.publish:plugin-publish-plugin:0.13.0"
     }
 }

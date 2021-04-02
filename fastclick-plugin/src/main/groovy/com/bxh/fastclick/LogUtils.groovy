@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2020 Baidu, Inc. All Rights Reserved.
  */
-package com.buxiaohui.fastclick
+package com.bxh.fastclick
 
 class LogUtils {
     static boolean E = true

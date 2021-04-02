@@ -1,7 +1,7 @@
 apply plugin: 'groovy'
 apply plugin: 'maven'
-apply plugin:  "com.gradle.plugin-publish"
-apply plugin:  "java-gradle-plugin"
+apply plugin: "com.gradle.plugin-publish"
+apply plugin: "java-gradle-plugin"
 
 dependencies {
     // gradle sdk
@@ -18,23 +18,26 @@ repositories {
     google()
 }
 
-
 uploadArchives {
     repositories {
         mavenDeployer {
-            repository(url: uri("../lib"))
-            pom.groupId = 'com.buxiaohui'
-            pom.artifactId = 'fc.watcher'
+            repository(url: uri("../localPluginRepository"))
+            pom.groupId = 'com.bxh'
+            pom.artifactId = 'fastclick'
             pom.version = '1.0.0'
         }
     }
 }
+
+group = 'com.bxh'
+version = '1.0.0'
+
 // Use java-gradle-plugin to generate plugin descriptors and specify plugin ids
 gradlePlugin {
     plugins {
-        greetingsPlugin {
-            id = 'fc.watcher'
-            implementationClass = 'com.buxiaohui.fastclick.FCPlugin'
+        fastClickPlugin {
+            id = 'com.bxh.fastclick'
+            implementationClass = 'com.bxh.fastclick.FCPlugin'
         }
     }
 }
@@ -44,16 +47,12 @@ gradlePlugin {
 pluginBundle {
     website = 'https://github.com/Buxiaohui/FastClick'
     vcsUrl = 'https://github.com/Buxiaohui/FastClick.git'
-    description = 'Fast click!'
-    tags = ['android', 'fast click']
-    version = '1.0.1'
-    group = "com.buxiaohui"
-
+    tags = ['android', 'fast clicks']
     plugins {
-        greetingsPlugin {
-            // id is captured from java-gradle-plugin configuration
-            id = 'fc.watcher'
+        fastClickPlugin {
+            version '1.0.0'
             displayName = 'Fast click plugin'
+            description = 'A Plugin For Android projects to prevent fast clicks!'
         }
     }
 }
