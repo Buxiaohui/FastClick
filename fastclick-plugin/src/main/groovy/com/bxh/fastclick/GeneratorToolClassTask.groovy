@@ -18,6 +18,7 @@ class GeneratorToolClassTask extends DefaultTask {
 
     @TaskAction
     def action() {
+        long start = System.currentTimeMillis()
         // 生成java类
         TypeSpec.Builder classBuilder = TypeSpec.classBuilder("FastClickUtils")
         classBuilder.addModifiers(Modifier.PUBLIC, Modifier.FINAL)
@@ -159,16 +160,18 @@ class GeneratorToolClassTask extends DefaultTask {
                 .build()
         classBuilder.addField(backupMapFieldSpec)
 
-        JavaFile javaFile = JavaFile.builder("com.buxiaohui.fastclick", classBuilder.build()).build()
+        TypeSpec classTypeSpec = classBuilder.build()
+        JavaFile javaFile = JavaFile.builder("com.buxiaohui.fastclick", classTypeSpec).build()
 
         // 将java写入到文件夹下
-        println("[project.buildDir is] $project.buildDir")
-        println("[project.projectDir is] $project.projectDir")
+        LogUtils.logD("[project.buildDir is] $project.buildDir")
+        LogUtils.logD("[project.projectDir is] $project.projectDir")
         File file = new File(project.buildDir, "generated/source/container")
         if (!file.exists()) {
             file.mkdirs()
         }
         javaFile.writeTo(file)
-        println("[write to] $file.absolutePath")
+        LogUtils.logI("[write to] ${file.absolutePath} -> ${javaFile.packageName}.${classTypeSpec.name}")
+        LogUtils.logI("[GeneratorToolClassTask cost] ${System.currentTimeMillis() - start} ms")
     }
 }

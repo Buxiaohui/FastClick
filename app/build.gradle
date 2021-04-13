@@ -1,7 +1,15 @@
 plugins {
     id 'com.android.application'
 }
-//apply plugin:'com.bxh.fastclick'
+apply plugin:'com.github.Buxiaohui.fastclick'
+
+FCConfig{
+    enableInsert = true
+    enableGen = true
+    logD = false
+    logI = true
+    logE = true
+}
 
 android {
     compileSdkVersion 30

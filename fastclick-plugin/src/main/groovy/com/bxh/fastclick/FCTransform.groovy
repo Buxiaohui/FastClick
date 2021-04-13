@@ -87,14 +87,14 @@ class FCTransform extends Transform {
             //**** 1.先把所有路径appendClassPath
             for (JarInput jarInput : input.jarInputs) {
                 injectGro.appendClassPath(jarInput.file.absolutePath)
-                if (jarInput.file.absolutePath.contains("glide")) {
-                    // LogUtils.logD("appendClassPath->jarInput:" + jarInput.file.absolutePath)
+                if (LogUtils.getD() && jarInput.file.absolutePath.contains("glide")) {
+                    LogUtils.logD("appendClassPath->jarInput:" + jarInput.file.absolutePath)
                 }
             }
             for (DirectoryInput directoryInput : input.directoryInputs) {
                 injectGro.appendClassPath(directoryInput.file.absolutePath)
-                if (directoryInput.file.absolutePath.contains("glide")) {
-                    // LogUtils.logD("appendClassPath->directoryInput:" + jdirectoryInput.file.absolutePath)
+                if (LogUtils.getD() && directoryInput.file.absolutePath.contains("glide")) {
+                    LogUtils.logD("appendClassPath->directoryInput:" + jdirectoryInput.file.absolutePath)
                 }
             }
         }

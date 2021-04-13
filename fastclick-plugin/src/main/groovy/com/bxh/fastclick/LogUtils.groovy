@@ -5,27 +5,27 @@ package com.bxh.fastclick
 
 class LogUtils {
     static boolean E = true
-    static boolean I = true
+    static boolean I = false
     static boolean D = false
 
     static void logE(String log) {
         if (!E) {
             return
         }
-        println(log)
+        println("E:${log}")
     }
 
     static void logI(String log) {
         if (!I) {
             return
         }
-        println(log)
+        println("I:${log}")
     }
 
     static void logD(String log) {
         if (!D) {
             return
         }
-        println(log)
+        println("D:${log}")
     }
 }

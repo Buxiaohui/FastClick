@@ -90,12 +90,10 @@ class InjectGro {
         }
     }
 
-    def printLog = true
-
     void injectDir(String inputPath, String outPutPath) throws NotFoundException, CannotCompileException {
         File dir = new File(inputPath)
-        LogUtils.logD("inject->inputPath = " + inputPath)
-        LogUtils.logD("inject->outPutPath = " + outPutPath)
+        LogUtils.logD("injectDir->inputPath = " + inputPath)
+        LogUtils.logD("injectDir->outPutPath = " + outPutPath)
         //判断如果是文件夹，则遍历文件夹
         if (dir.isDirectory()) {
             //开始遍历
@@ -109,8 +107,8 @@ class InjectGro {
                             && !filePath.contains('R.class')
                             && !filePath.contains("BuildConfig.class")) {
 
-                        LogUtils.logD("inject->file = " + file)
-                        LogUtils.logD("inject->outPutFile = " + outPutFile)
+                        LogUtils.logD("injectDir->file = " + file)
+                        LogUtils.logD("injectDir->outPutFile = " + outPutFile)
                         FileInputStream inputStream = new FileInputStream(file)
                         FileOutputStream outputStream = new FileOutputStream(outPutFile)
                         transformDir(inputStream, outputStream, pool)
@@ -181,21 +179,7 @@ class InjectGro {
                     Annotation annotation = annotations[j]
                     if (annotation != null) {
                         String injectFCCode = ""
-                        if (configExtension != null && configExtension.annotation != null
-                                && configExtension.annotation.equalsIgnoreCase(annotation.typeName)) {
-                            LongMemberValue timeIntervalMemberValue = annotation.getMemberValue(configExtension.annotationTimeInterval)
-                            StringMemberValue tagMemberValue = annotation.getMemberValue(configExtension.annotationTag)
-                            LogUtils.logD("annotation,timeIntervalMemberValue:" + timeIntervalMemberValue)
-                            LogUtils.logD("annotation,tagMemberValue:" + tagMemberValue)
-
-                            String tag = tagMemberValue.value
-                            long timeInterval = timeIntervalMemberValue.value
-                            injectFCCode = configExtension.insertCodeTemplate
-                            injectFCCode = injectFCCode.replace(configExtension.annotationTag, tag)
-                            injectFCCode = injectFCCode.replace(configExtension.annotationTimeInterval, "" + timeInterval)
-
-                        } else if ("com.buxiaohui.fastclick.FC".equalsIgnoreCase(annotation.typeName)) {
-
+                        if ("com.buxiaohui.fastclick.FC".equalsIgnoreCase(annotation.typeName)) {
                             LongMemberValue timeIntervalMemberValue = annotation.getMemberValue("timeInterval")
                             StringMemberValue tagMemberValue = annotation.getMemberValue("tag")
                             def isTagInvalid = tagMemberValue == null || TextUtils.isEmpty(tagMemberValue.value)
@@ -205,12 +189,12 @@ class InjectGro {
                             injectFCCode = "if (com.buxiaohui.fastclick.FastClickUtils.isFastClick(\"$tag\",${timeInterval}L)) {\n" +
                                     "                                                    return;\n" +
                                     "                                                }"
-                            LogUtils.logI("annotation:$annotation")
-                            LogUtils.logI("tagMemberValue:$tagMemberValue")
-                            LogUtils.logI("timeIntervalMemberValue:$timeIntervalMemberValue")
+                            LogUtils.logD("annotation:$annotation")
+                            LogUtils.logD("tagMemberValue:$tagMemberValue")
+                            LogUtils.logD("timeIntervalMemberValue:$timeIntervalMemberValue")
                         }
                         if (ctMethod != null && !TextUtils.isEmpty(injectFCCode)) {
-                            LogUtils.logI("injectFCCode:$injectFCCode")
+                            LogUtils.logD("injectFCCode:$injectFCCode")
                             ctMethod.insertBefore(injectFCCode) // 在方法开始注入代码
                         }
                     }
