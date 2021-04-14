@@ -78,3 +78,6 @@
         });
     }
 ```
+gradle 配置：
+详见 https://plugins.gradle.org/plugin/com.github.Buxiaohui.fastclick  
+
