@@ -78,6 +78,10 @@
         });
     }
 ```
-gradle 配置：
-详见 https://plugins.gradle.org/plugin/com.github.Buxiaohui.fastclick  
+使用：  
+1.gradle 配置：
+详见 https://plugins.gradle.org/plugin/com.github.Buxiaohui.fastclick    
+2.builde一次（以便于生成工具类FastClickUtils.java及注解类FC.java）    
+3.在希望防止快速点击的地方加上注解，注解有两个参数 tag 和 intervalTime，代表分组和时间间隔，具体逻辑可以查看FastClickUtils.java  
+
 
